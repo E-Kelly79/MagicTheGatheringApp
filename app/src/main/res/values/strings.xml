@@ -1,0 +1,53 @@
+<resources>
+    <string name="app_name">Magic The Garthering</string>
+    <string name="action_settings">Settings</string>
+    <string name="search_card_name">Search Card Name</string>
+    <string name="search_title">Search Card Database</string>
+    <string name="search_text">Search</string>
+    <string name="delete">Delete></string>
+    <string name="add_to_deck">Add to deck</string>
+    <string name="name_field">Card Name:</string>
+    <string name="search_name">Name</string>
+    <string name="search_type">Type</string>
+    <string name="search_booster">Booster</string>
+    <string name="search_colors">Search by Colours</string>
+    <string name="seach_rarity">Search by Rarity</string>
+    <string name="search_cards_button">Search For Cards</string>
+    <string name="booster_prompt">Choose a Booster</string>
+    <string name="name_hint">Name</string>
+    <string name="type_hint">Type</string>
+    <string name="white">white</string>
+    <string name="blue">blue</string>
+    <string name="black">black</string>
+    <string name="green">green</string>
+    <string name="red">red</string>
+
+    <string-array name="type_array">
+        <item>Please Select a Type</item>
+        <item>Enchantment</item>
+        <item>Sorcery</item>
+        <item>Instant</item>
+        <item>Artifact</item>
+        <item>Planeswalker</item>
+        <item>Cat</item>
+        <item>Vampire</item>
+        <item>Beast</item>
+        <item>Merfolk</item>
+        <item>Human</item>
+        <item>Demon</item>
+        <item>Wolf</item>
+        <item>Dinosaur</item>
+        <item>Elf</item>
+        <item>Rat</item>
+    </string-array>
+
+    <string-array name="color_array">
+        <item>Please Select a Colour</item>
+        <item>White</item>
+        <item>Blue</item>
+        <item>Black</item>
+        <item>Red</item>
+        <item>Green</item>
+    </string-array>
+
+</resources>
