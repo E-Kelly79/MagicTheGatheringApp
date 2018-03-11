@@ -8,6 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
 import com.squareup.picasso.Picasso;
 import java.util.List;
 import app.ie.mymagiccards.R;
@@ -47,8 +49,12 @@ public class CardRecyclerViewAdapter extends RecyclerView.Adapter<CardRecyclerVi
         holder.cardRarity.setText(card.getRarity());
 
         if(!cardImage.equals("")) {
-            Picasso.with(context)
+            Glide.with(context)
                     .load(cardImage)
+                    .into(holder.cardImage);
+        }else{
+            Glide.with(context)
+                    .load(R.drawable.cardback)
                     .into(holder.cardImage);
         }
 

@@ -114,7 +114,7 @@ public class MainActivity extends AppCompatActivity {
     public List<Cards> getCards(String search){
         //Send a http request to server to retrive card list
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET,
-                search, new Response.Listener<JSONObject>() {
+                Constants.URL, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 try {
@@ -300,11 +300,14 @@ public class MainActivity extends AppCompatActivity {
                     for (int i = 0; i < cardInformation.length(); i++) {
                         JSONObject cardObject = cardInformation.getJSONObject(i);
                         Cards cards = new Cards();
-                            cards.setName("Name: " + cardObject.getString("name"));
-
+                        cards.setName("Name: " + cardObject.getString("name"));
                         cards.setColor("Color: "   + cardObject.optString("colors"));
                         cards.setType("Type: "     + cardObject.getString("type"));
-                        cards.setRarity("Rarity: " + cardObject.getString("rarity"));
+                        if(!cardObject.getString("rarity").equals("Special")) {
+                            cards.setRarity("Rarity: " + cardObject.getString("rarity"));
+                        }else {
+                            continue;
+                        }
                         cards.setImageUrl(cardObject.optString("imageUrl"));
                         cards.setCardID(cardObject.getString("id"));
                         cardList.add(cards);

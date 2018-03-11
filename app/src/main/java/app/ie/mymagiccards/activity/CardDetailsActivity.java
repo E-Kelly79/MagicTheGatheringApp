@@ -16,6 +16,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.bumptech.glide.Glide;
 import com.squareup.picasso.Picasso;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -60,15 +61,19 @@ public class CardDetailsActivity extends AppCompatActivity {
                 try{
                     JSONObject singleCardInfo = response.getJSONObject("card");
                     cardName.setText("Name: " + singleCardInfo.getString("name"));
-                    cardColor.setText("Colour: " + singleCardInfo.getString("colors"));
+                    cardColor.setText("Colour: " + singleCardInfo.optString("colors"));
                     cardType.setText("Type: " + singleCardInfo.getString("type"));
-                    cardManaCost.setText("Mana Cost " + singleCardInfo.getString("manaCost"));
+                    cardManaCost.setText("Mana Cost " + singleCardInfo.optString("manaCost"));
                     cardRarity.setText("Rarity: " + singleCardInfo.getString("rarity"));
                     cardSet.setText("Set: " + singleCardInfo.getString("setName"));
-                    cardText.setText("Text: " + singleCardInfo.getString("text"));
-                    if(!singleCardInfo.getString("imageUrl").equals("")){
-                        Picasso.with(getApplicationContext())
+                    cardText.setText("Text: " + singleCardInfo.optString("text"));
+                    if(!singleCardInfo.optString("imageUrl").equals("")){
+                        Glide.with(getApplicationContext())
                                 .load(singleCardInfo.getString("imageUrl"))
+                                .into(cardImage);
+                    }else{
+                        Glide.with(getApplicationContext())
+                                .load(R.drawable.cardback)
                                 .into(cardImage);
                     }
                 }catch (JSONException e){
