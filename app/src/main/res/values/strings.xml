@@ -24,30 +24,30 @@
 
     <string-array name="type_array">
         <item>Please Select a Type</item>
-        <item>Enchantment</item>
-        <item>Sorcery</item>
-        <item>Instant</item>
-        <item>Artifact</item>
-        <item>Planeswalker</item>
-        <item>Cat</item>
-        <item>Vampire</item>
-        <item>Beast</item>
-        <item>Merfolk</item>
-        <item>Human</item>
-        <item>Demon</item>
-        <item>Wolf</item>
-        <item>Dinosaur</item>
-        <item>Elf</item>
-        <item>Rat</item>
+        <item>enchantment</item>
+        <item>sorcery</item>
+        <item>instant</item>
+        <item>artifact</item>
+        <item>planeswalker</item>
+        <item>cat</item>
+        <item>vampire</item>
+        <item>beast</item>
+        <item>merfolk</item>
+        <item>human</item>
+        <item>demon</item>
+        <item>wolf</item>
+        <item>dinosaur</item>
+        <item>elf</item>
+        <item>rat</item>
     </string-array>
 
     <string-array name="color_array">
         <item>Please Select a Colour</item>
-        <item>White</item>
-        <item>Blue</item>
-        <item>Black</item>
-        <item>Red</item>
-        <item>Green</item>
+        <item>white</item>
+        <item>blue</item>
+        <item>black</item>
+        <item>red</item>
+        <item>green</item>
     </string-array>
 
 </resources>

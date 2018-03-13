@@ -49,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
     private Spinner                 spinner, colorSpinner;
     private ArrayAdapter            spinnerAdapter;
     private Button                  searchBtn;
+    private boolean                 blankName, blankType, blankColor;
 
 
 
@@ -75,6 +76,8 @@ public class MainActivity extends AppCompatActivity {
         //Save a string for your search results
         Prefs prefs = new Prefs(MainActivity.this);
         String search = prefs.getSearch();
+
+        Log.i("URL", search);
 
         cardList = new ArrayList<>();
         cardList = getCards(search);
@@ -114,7 +117,7 @@ public class MainActivity extends AppCompatActivity {
     public List<Cards> getCards(String search){
         //Send a http request to server to retrive card list
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET,
-                Constants.URL, new Response.Listener<JSONObject>() {
+                search, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 try {
@@ -126,7 +129,13 @@ public class MainActivity extends AppCompatActivity {
                         cards.setName("Name: "     + cardObject.getString("name"));
                         cards.setColor("Color: "   + cardObject.optString("colors"));
                         cards.setType("Type: "     + cardObject.getString("type"));
-                        cards.setRarity("Rarity: " + cardObject.getString("rarity"));
+                        if(!cardObject.getString("rarity").equals("Special")) {
+                            cards.setRarity("Rarity: " + cardObject.getString("rarity"));
+                        }else {
+                            Log.i("Special",  cardObject.getString("rarity").toString());
+                            continue;
+                        }
+
                         cards.setImageUrl(cardObject.optString("imageUrl"));
                         cards.setCardID(cardObject.getString("id"));
                         cardList.add(cards);
@@ -165,7 +174,6 @@ public class MainActivity extends AppCompatActivity {
         spinnerAdapter = ArrayAdapter.createFromResource(MainActivity.this, R.array.color_array, android.R.layout.simple_spinner_item);
         spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         colorSpinner.setAdapter(spinnerAdapter);
-
         alertDialog.setView(view);
         dialog = alertDialog.create();
         dialog.show();
@@ -173,22 +181,35 @@ public class MainActivity extends AppCompatActivity {
         searchBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                searchByAll();
-                searchByName();
-                searchByType();
-                searchByColor();
+                blankName  =    !newSearch.getText().toString().isEmpty();
+                blankType  =    !spinner.getSelectedItem().toString().equals("Please Select a Type");
+                blankColor =    !colorSpinner.getSelectedItem().toString().equals("Please Select a Colour");
 
+               if(blankName && !blankType && !blankColor) {
+                   searchByName();
+               }else if(blankName && blankType && !blankColor){
+                    searchByNameAndType();
+               }else if(blankName && !blankType && blankColor){
+                    searchByNameAndcolor();
+               }else if(!blankName && blankType && blankColor){
+                    searchByTypeAndcolor();
+               }else if(!blankName && blankType && !blankColor){
+                   searchByType();
+               }else if(!blankName && !blankType && blankColor){
+                   searchByColor();
+               }else if(blankName && blankType && blankColor){
+                   searchByAll();
+               }else{
+                   Toast.makeText(getApplicationContext(), "Your search could not be completed please fill in some fields", Toast.LENGTH_LONG).show();
+               }
 
+                Log.i("Searcher", Constants.SEARCH_CARD);
 
             }
         });
     }
 
     public void searchFunction() {
-        Prefs pref = new Prefs(MainActivity.this);
-        String search = Constants.SEARCH_CARD;
-        Log.i("Searcher", search);
-        pref.setSearch(search);
         cardList.clear();
         searchCardsByName();
         cardRecyclerViewAdapter.notifyDataSetChanged(); // update the recycler view to the changes
@@ -202,43 +223,90 @@ public class MainActivity extends AppCompatActivity {
             Constants.SEARCH_CARD += "name=" + newSearch.getText().toString() +
                                      "&type=" + spinner.getSelectedItem().toString() +
                                      "&colors=" + colorSpinner.getSelectedItem().toString() ;
+            Prefs pref = new Prefs(MainActivity.this);
+            String search = Constants.SEARCH_CARD;
+            Log.i("Searcher", search);
+            pref.setSearch(search);
             searchFunction();
 
         }else{
             dialog.dismiss();
-            Toast.makeText(getApplicationContext(), "Your search could not be completed", Toast.LENGTH_LONG).show();
+
         }
     }
 
     public void searchByName(){
-        Prefs pref = new Prefs(MainActivity.this);
         if(!(newSearch.getText().toString().isEmpty())){
             Constants.SEARCH_CARD += "name=" + newSearch.getText().toString()+ "&pageSize=20&orderBy=name";
+            Prefs pref = new Prefs(MainActivity.this);
+            String search = Constants.SEARCH_CARD;
+            Log.i("Searcher", search);
+            pref.setSearch(search);
            searchFunction();
         }else{
             dialog.dismiss();
-            Toast.makeText(getApplicationContext(), "Your search could not be completed", Toast.LENGTH_LONG).show();
+
         }
     }
 
+    public void searchByNameAndType(){
+        if(!newSearch.getText().toString().isEmpty() && spinner.getSelectedItem().toString() != "Please Select a Type"){
+            Constants.SEARCH_CARD += "name="+newSearch.getText().toString()+ "&type=" + spinner.getSelectedItem().toString();
+            Prefs pref = new Prefs(MainActivity.this);
+            String search = Constants.SEARCH_CARD;
+
+            pref.setSearch(search);
+            searchFunction();
+        }
+    }
+
+    public void searchByNameAndcolor(){
+        if(!newSearch.getText().toString().isEmpty() && colorSpinner.getSelectedItem().toString() != "Please Select a Colour"){
+            Constants.SEARCH_CARD += "name="+newSearch.getText().toString()+ "&colors=" + colorSpinner.getSelectedItem().toString();
+            Prefs pref = new Prefs(MainActivity.this);
+            String search = Constants.SEARCH_CARD;
+
+            pref.setSearch(search);
+            searchFunction();
+        }
+    }
+
+    public void searchByTypeAndcolor(){
+        if(spinner.getSelectedItem().toString() != "Please Select a Type" && colorSpinner.getSelectedItem().toString() != "Please Select a Colour"){
+            Constants.SEARCH_CARD += "type="+spinner.getSelectedItem().toString()+ "&colors=" + colorSpinner.getSelectedItem().toString();
+            Prefs pref = new Prefs(MainActivity.this);
+            String search = Constants.SEARCH_CARD;
+
+            pref.setSearch(search);
+            searchFunction();
+        }
+    }
+
+
+
     public void searchByType(){
-        Prefs pref = new Prefs(MainActivity.this);
         if(spinner.getSelectedItem().toString() != "Please Select a Type"){
-            Constants.SEARCH_CARD += "type=" + spinner.getSelectedItem().toString()+ "";
+            Constants.SEARCH_CARD += "type=" + spinner.getSelectedItem().toString();
+            Prefs pref = new Prefs(MainActivity.this);
+            String search = Constants.SEARCH_CARD;
+            pref.setSearch(search);
             searchFunction();
         }else{
             dialog.dismiss();
-            Toast.makeText(getApplicationContext(), "Your search could not be completed", Toast.LENGTH_LONG).show();
+
         }
     }
 
     public void searchByColor(){
         if(colorSpinner.getSelectedItem().toString() != "Please Select a Colour"){
             Constants.SEARCH_CARD += "colors=" + colorSpinner.getSelectedItem().toString();
+            Prefs pref = new Prefs(MainActivity.this);
+            String search = Constants.SEARCH_CARD;
+            pref.setSearch(search);
             searchFunction();
         }else{
             dialog.dismiss();
-            Toast.makeText(getApplicationContext(), "Your search could not be completed", Toast.LENGTH_LONG).show();
+
         }
     }
 
@@ -291,8 +359,6 @@ public class MainActivity extends AppCompatActivity {
                 Constants.SEARCH_CARD, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
-
-
                 try {
                     //loop trough the data array to pull out the needed information
                     JSONArray cardInformation = response.getJSONArray("cards");
@@ -312,7 +378,7 @@ public class MainActivity extends AppCompatActivity {
                         cards.setCardID(cardObject.getString("id"));
                         cardList.add(cards);
 
-                        Log.i("Card Information", cardObject.toString());
+
                     }
 
                     cardRecyclerViewAdapter.notifyDataSetChanged();//Important!!
