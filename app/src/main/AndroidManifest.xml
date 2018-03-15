@@ -22,7 +22,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".activity.CardDetailsActivity" />
-        <activity android:name=".activity.SearchActivity"></activity>
+        <activity android:name=".activity.SearchActivity" />
+        <activity android:name=".activity.MainMenu"></activity>
     </application>
 
 </manifest>
