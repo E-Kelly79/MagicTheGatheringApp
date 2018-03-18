@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Magic The Garthering</string>
+    <string name="app_name">Magic The Gathering</string>
     <string name="action_settings">Settings</string>
     <string name="search_card_name">Search Card Name</string>
     <string name="search_title">Search Card Database</string>

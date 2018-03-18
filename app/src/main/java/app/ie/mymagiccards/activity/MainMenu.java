@@ -1,5 +1,6 @@
 package app.ie.mymagiccards.activity;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -25,7 +26,8 @@ public class MainMenu extends AppCompatActivity {
         search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(MainMenu.this, "Search button pressed", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(MainMenu.this, MainActivity.class);
+                startActivity(intent);
             }
         });
 

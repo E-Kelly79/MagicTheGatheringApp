@@ -109,8 +109,6 @@ public class MainActivity extends AppCompatActivity {
                 // TODO: 28/02/2018 add delete method to delete card from deck
                 break;
             case R.id.add :
-                Intent intent = new Intent(MainActivity.this, MainMenu.class);
-                startActivity(intent);
                 // TODO: 28/02/2018 Add card to deklist method
 
             }
