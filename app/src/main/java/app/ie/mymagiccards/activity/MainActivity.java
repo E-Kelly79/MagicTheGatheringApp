@@ -40,6 +40,7 @@ import app.ie.mymagiccards.utils.Prefs;
 
 public class MainActivity extends AppCompatActivity {
 
+    //Set up variables
     private RecyclerView            recyclerView;
     private CardRecyclerViewAdapter cardRecyclerViewAdapter;
     private List<Cards>             cardList;
@@ -60,7 +61,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
         toolbar.setLogo(R.drawable.logomagicnew);
         getSupportActionBar().setTitle("");
 
@@ -69,6 +69,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+        //Set up recyclerview for input
         recyclerView =  findViewById(R.id.recyclerView);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -80,6 +81,7 @@ public class MainActivity extends AppCompatActivity {
 
         Log.i("URL", search);
 
+        //add cardlist to recyclerview
         cardList = new ArrayList<>();
         cardList = getCards(search);
         cardRecyclerViewAdapter = new CardRecyclerViewAdapter(this, cardList);
@@ -106,10 +108,10 @@ public class MainActivity extends AppCompatActivity {
                 showInputDialog();
                 break;
             case R.id.delete :
-                // TODO: 28/02/2018 add delete method to delete card from deck
+                // TODO: 18/03/2018 Delete card to Decks method
                 break;
             case R.id.add :
-                // TODO: 28/02/2018 Add card to deklist method
+                // TODO: 18/03/2018 Add card to Decks method
 
             }
         return super.onOptionsItemSelected(item);
@@ -124,12 +126,15 @@ public class MainActivity extends AppCompatActivity {
                 try {
                     //loop trough the data array to pull out the needed information
                     JSONArray cardInformation = response.getJSONArray("cards");
+
+                    //Loop trough the cards array and pull back information and attach it to setters
                     for (int i = 0; i < cardInformation.length(); i++) {
                         JSONObject cardObject = cardInformation.getJSONObject(i);
                         Cards cards = new Cards();
                         cards.setName("Name: "     + cardObject.getString("name"));
                         cards.setColor("Color: "   + cardObject.optString("colors"));
                         cards.setType("Type: "     + cardObject.getString("type"));
+
                         if(!cardObject.getString("rarity").equals("Special")) {
                             cards.setRarity("Rarity: " + cardObject.getString("rarity"));
                         }else {
@@ -151,7 +156,7 @@ public class MainActivity extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-
+                Toast.makeText(MainActivity.this, "Request could not be gotten, Please try again later", Toast.LENGTH_SHORT).show();
             }
         });
         queue.add(jsonObjectRequest);
@@ -163,12 +168,15 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void showInputDialog(){
+        //Build custom alert dialog
         alertDialog = new AlertDialog.Builder(this);
         View view = getLayoutInflater().inflate(R.layout.dialog_view, null);
         newSearch = view.findViewById(R.id.searchEdt);
         searchBtn = view.findViewById(R.id.submitBtn);
         spinner = view.findViewById(R.id.searchTypeBox);
         colorSpinner = view.findViewById(R.id.colorPickerSpinner);
+
+        //attach spinners to an addapter
         spinnerAdapter = ArrayAdapter.createFromResource(MainActivity.this, R.array.type_array, android.R.layout.simple_spinner_item);
         spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(spinnerAdapter);
@@ -179,6 +187,7 @@ public class MainActivity extends AppCompatActivity {
         dialog = alertDialog.create();
         dialog.show();
 
+        //Search for cards
         searchBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -210,6 +219,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+
     public void searchFunction() {
         cardList.clear();
         searchCardsByName();
@@ -219,6 +229,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    //search cards by all fields
     public void searchByAll(){
         if(!(newSearch.getText().toString().isEmpty()) && (spinner.getSelectedItem().toString() != "Please Select a Type") && (colorSpinner.getSelectedItem().toString() != "Please Select a Colour")){
             Constants.SEARCH_CARD += "name=" + newSearch.getText().toString() +
@@ -236,6 +247,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    //search card by name
     public void searchByName(){
         if(!(newSearch.getText().toString().isEmpty())){
             Constants.SEARCH_CARD += "name=" + newSearch.getText().toString()+ "&pageSize=20&orderBy=name";
@@ -250,6 +262,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    //search card by name and type
     public void searchByNameAndType(){
         if(!newSearch.getText().toString().isEmpty() && spinner.getSelectedItem().toString() != "Please Select a Type"){
             Constants.SEARCH_CARD += "name="+newSearch.getText().toString()+ "&type=" + spinner.getSelectedItem().toString();
@@ -261,6 +274,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    //search card by name and color
     public void searchByNameAndcolor(){
         if(!newSearch.getText().toString().isEmpty() && colorSpinner.getSelectedItem().toString() != "Please Select a Colour"){
             Constants.SEARCH_CARD += "name="+newSearch.getText().toString()+ "&colors=" + colorSpinner.getSelectedItem().toString();
@@ -272,6 +286,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    //search card by type and color
     public void searchByTypeAndcolor(){
         if(spinner.getSelectedItem().toString() != "Please Select a Type" && colorSpinner.getSelectedItem().toString() != "Please Select a Colour"){
             Constants.SEARCH_CARD += "type="+spinner.getSelectedItem().toString()+ "&colors=" + colorSpinner.getSelectedItem().toString();
@@ -285,6 +300,8 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+
+    //search card by type
     public void searchByType(){
         if(spinner.getSelectedItem().toString() != "Please Select a Type"){
             Constants.SEARCH_CARD += "type=" + spinner.getSelectedItem().toString();
@@ -298,6 +315,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    //search card by color
     public void searchByColor(){
         if(colorSpinner.getSelectedItem().toString() != "Please Select a Colour"){
             Constants.SEARCH_CARD += "colors=" + colorSpinner.getSelectedItem().toString();
@@ -312,6 +330,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    //not sure if needed
     public void setUpSpinner(View view){
         spinner = view.findViewById(R.id.searchTypeBox);
         spinnerAdapter = ArrayAdapter.createFromResource(MainActivity.this, R.array.type_array, android.R.layout.simple_spinner_item);
@@ -330,6 +349,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    //not sure if needed
     public void setUpColorSpinner(View view){
         colorSpinner = view.findViewById(R.id.searchTypeBox);
         spinnerAdapter = ArrayAdapter.createFromResource(MainActivity.this, R.array.type_array, android.R.layout.simple_spinner_item);

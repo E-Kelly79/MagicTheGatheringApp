@@ -17,7 +17,6 @@ public class MainMenu extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_menu);
-
         search = findViewById(R.id.searchButtonMenu);
         decks = findViewById(R.id.deckButton);
         players = findViewById(R.id.playerButton);
@@ -34,21 +33,21 @@ public class MainMenu extends AppCompatActivity {
         decks.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(MainMenu.this, "Decks button pressed", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainMenu.this, "Decks button pressed Coming soon", Toast.LENGTH_SHORT).show();
             }
         });
 
         players.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(MainMenu.this, "Players button pressed", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainMenu.this, "Players button pressed Coming soon", Toast.LENGTH_SHORT).show();
             }
         });
 
         life.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(MainMenu.this, "Life button pressed", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainMenu.this, "Life button pressed Coming soon", Toast.LENGTH_SHORT).show();
             }
         });
 

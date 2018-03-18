@@ -10,6 +10,7 @@ import java.util.List;
 public class Cards implements Serializable {
     private static final long id = 1L;
 
+    //Set up variables for the card model
     private String name;
     private String manaCost;
     private String color;
@@ -17,16 +18,27 @@ public class Cards implements Serializable {
     private String rarity;
     private String cardText;
     private String imageUrl;
-    private String power;
-    private String toughness;
     private String cardID;
 
 
 
+
+    //An empty constructor
     public Cards() {
     }
 
+    public Cards(String name, String manaCost, String color, String type, String rarity, String cardText, String imageUrl, String cardID) {
+        this.name = name;
+        this.manaCost = manaCost;
+        this.color = color;
+        this.type = type;
+        this.rarity = rarity;
+        this.cardText = cardText;
+        this.imageUrl = imageUrl;
+        this.cardID = cardID;
+    }
 
+    //Getter and setters
     public String getName() {
         return name;
     }
@@ -101,8 +113,6 @@ public class Cards implements Serializable {
                 ", rarity='" + rarity + '\'' +
                 ", cardText='" + cardText + '\'' +
                 ", imageUrl='" + imageUrl + '\'' +
-                ", power='" + power + '\'' +
-                ", toughness='" + toughness + '\'' +
                 ", cardID='" + cardID + '\'' +
                 '}';
     }

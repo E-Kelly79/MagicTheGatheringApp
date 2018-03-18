@@ -10,6 +10,7 @@ import java.util.List;
  * Created by Eoin on 24/02/2018.
  */
 
+//Class to save search
 public class Prefs {
     SharedPreferences sharedPreferences;
 
@@ -25,10 +26,4 @@ public class Prefs {
         return sharedPreferences.getString("search", "cards");
     }
 
-
-
-
-    public void setDecks(String decks){
-        sharedPreferences.edit().putString("", decks).commit();
-    }
 }

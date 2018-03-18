@@ -25,6 +25,7 @@ import app.ie.mymagiccards.utils.Constants;
 
 public class CardDetailsActivity extends AppCompatActivity {
 
+    //Set up variables
     private Cards        cards;
     private TextView     cardName, cardManaCost, cardType,
                          cardColor, cardText, cardRarity,
@@ -41,14 +42,27 @@ public class CardDetailsActivity extends AppCompatActivity {
         Slide slide = new Slide(Gravity.RIGHT);
         getWindow().setReenterTransition(slide);
 
+
         queue = Volley.newRequestQueue(this);
 
+        //get the card id from the intent
         cards = (Cards) getIntent().getSerializableExtra("card");
         cardid = cards.getCardID();
 
         setupUi();
         getCardDetails(cardid);
 
+    }
+
+    private void setupUi() {
+        cardName = findViewById(R.id.cardNameDetails);
+        cardManaCost = findViewById(R.id.manaCost);
+        cardType = findViewById(R.id.cardTypeDetails);
+        cardColor = findViewById(R.id.colorDetailsId);
+        cardRarity = findViewById(R.id.cardRarityDetails);
+        cardText = findViewById(R.id.cardTextDetails);
+        cardSet = findViewById(R.id.setCardDetails);
+        cardImage = findViewById(R.id.cardImageDetail);
     }
 
     private void getCardDetails(String id) {
@@ -90,14 +104,5 @@ public class CardDetailsActivity extends AppCompatActivity {
     }
 
 
-    private void setupUi() {
-        cardName = findViewById(R.id.cardNameDetails);
-        cardManaCost = findViewById(R.id.manaCost);
-        cardType = findViewById(R.id.cardTypeDetails);
-        cardColor = findViewById(R.id.colorDetailsId);
-        cardRarity = findViewById(R.id.cardRarityDetails);
-        cardText = findViewById(R.id.cardTextDetails);
-        cardSet = findViewById(R.id.setCardDetails);
-        cardImage = findViewById(R.id.cardImageDetail);
-    }
+
 }
