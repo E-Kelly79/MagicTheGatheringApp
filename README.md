@@ -1,8 +1,8 @@
 # Magic The Garthering
 
-## |Name            |Student No|-|
-## |----------------|----------|-|
-## |Eoin Kelly		 | 20074820|-|
+ |Name            |Student No|-|
+ |----------------|----------|-|
+ |Eoin Kelly		 | 20074820|-|
 
  About App
 This app was an assignment from collage. It will let you search for cards by name color and type it will also let you add cards to decks and even make new decks and delete cards from decks it will also have some of the game tools like dice rolls and life counters
