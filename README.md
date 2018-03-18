@@ -6,7 +6,8 @@
  About App
 This app was an assignment from collage. It will let you search for cards by name color and type it will also let you add cards to decks and even make new decks and delete cards from decks it will also have some of the game tools like dice rolls and life counters
 Some images 
-![Card List ](http://i211.photobucket.com/albums/bb7/timaldo/screenshot1_zps7x7xpfrm.png)
+
+![Card List](http://i211.photobucket.com/albums/bb7/timaldo/screenshot1_zps7x7xpfrm.png)
 
 ![Search Screen](http://i211.photobucket.com/albums/bb7/timaldo/screenshot2_zps7cs40pit.png)
 
