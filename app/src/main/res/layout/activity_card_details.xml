@@ -5,128 +5,26 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="app.ie.mymagiccards.activity.CardDetailsActivity"
-    android:background="@drawable/jace"
+    android:background="@drawable/rust"
     android:layout_margin="5dp">
 
     <ImageView
         android:id="@+id/cardImageDetail"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
+        android:layout_marginBottom="4dp"
+        android:layout_marginEnd="4dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="4dp"
+        android:contentDescription="cardImage"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:contentDescription="cardImage" />
+        app:layout_constraintTop_toTopOf="parent" />
 
 
-    <TextView
-        android:id="@+id/cardNameDetails"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/cardRarityDetails"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="5dp"
-        android:paddingLeft="10dp"
-        android:paddingTop="5dp"
-        android:text="Card Name:"
-        android:textColor="@color/colorAccent"
-        android:textSize="14sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cardImageDetail" />
-
-    <TextView
-        android:id="@+id/colorDetailsId"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/cardNameDetails"
-        android:layout_marginTop="5dp"
-        android:paddingLeft="10dp"
-        android:paddingTop="5dp"
-        android:text="Color:"
-        android:textColor="@color/colorAccent"
-        android:textSize="14sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="@+id/cardNameDetails"
-        app:layout_constraintTop_toBottomOf="@+id/cardNameDetails" />
-
-    <TextView
-        android:id="@+id/cardTypeDetails"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/colorDetailsId"
-        android:layout_marginTop="5dp"
-        android:paddingLeft="10dp"
-        android:paddingTop="5dp"
-        android:text="Type:"
-        android:textColor="@color/colorAccent"
-        android:textSize="14sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="@+id/colorDetailsId"
-        app:layout_constraintTop_toBottomOf="@+id/colorDetailsId" />
-
-    <TextView
-        android:id="@+id/cardRarityDetails"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/cardTypeDetails"
-        android:layout_marginTop="5dp"
-        android:paddingLeft="10dp"
-        android:paddingTop="5dp"
-        android:text="Text:"
-        android:textColor="@color/colorAccent"
-        android:textSize="14sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="@+id/cardTypeDetails"
-        app:layout_constraintTop_toBottomOf="@+id/cardTypeDetails" />
-
-
-    <TextView
-        android:id="@+id/manaCost"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/cardRarityDetails"
-        android:layout_marginTop="5dp"
-        android:paddingLeft="10dp"
-        android:paddingTop="5dp"
-        android:text="Mana Cost"
-        android:textColor="@color/colorAccent"
-        android:textSize="14sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="@+id/cardRarityDetails"
-        app:layout_constraintTop_toBottomOf="@+id/cardRarityDetails" />
-
-
-    <TextView
-        android:id="@+id/setCardDetails"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/manaCost"
-        android:layout_marginTop="5dp"
-        android:paddingLeft="10dp"
-        android:paddingTop="5dp"
-        android:text="Set"
-        android:textColor="@color/colorAccent"
-        android:textSize="14sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="@+id/manaCost"
-        app:layout_constraintTop_toBottomOf="@+id/manaCost" />
-
-    <TextView
-        android:id="@+id/cardTextDetails"
-        android:layout_width="340dp"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/setCardDetails"
-        android:layout_marginTop="5dp"
-        android:paddingLeft="10dp"
-        android:paddingTop="5dp"
-        android:text="Text"
-        android:textColor="@color/colorAccent"
-        android:textSize="14sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="@+id/setCardDetails"
-        app:layout_constraintTop_toBottomOf="@+id/setCardDetails" />
 
 
 </android.support.constraint.ConstraintLayout>

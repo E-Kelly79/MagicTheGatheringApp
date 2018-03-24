@@ -55,13 +55,13 @@ public class CardDetailsActivity extends AppCompatActivity {
     }
 
     private void setupUi() {
-        cardName = findViewById(R.id.cardNameDetails);
-        cardManaCost = findViewById(R.id.manaCost);
-        cardType = findViewById(R.id.cardTypeDetails);
-        cardColor = findViewById(R.id.colorDetailsId);
-        cardRarity = findViewById(R.id.cardRarityDetails);
-        cardText = findViewById(R.id.cardTextDetails);
-        cardSet = findViewById(R.id.setCardDetails);
+//        cardName = findViewById(R.id.cardNameDetails);
+//        cardManaCost = findViewById(R.id.manaCost);
+//        cardType = findViewById(R.id.cardTypeDetails);
+//        cardColor = findViewById(R.id.colorDetailsId);
+//        cardRarity = findViewById(R.id.cardRarityDetails);
+//        cardText = findViewById(R.id.cardTextDetails);
+//        cardSet = findViewById(R.id.setCardDetails);
         cardImage = findViewById(R.id.cardImageDetail);
     }
 
@@ -70,17 +70,10 @@ public class CardDetailsActivity extends AppCompatActivity {
             @Override
             public void onResponse(JSONObject response) {
                 try{
-                    JSONObject singleCardInfo = response.getJSONObject("card");
-                    cardName.setText("Name: " + singleCardInfo.getString("name"));
-                    cardColor.setText("Colour: " + singleCardInfo.optString("colors"));
-                    cardType.setText("Type: " + singleCardInfo.getString("type"));
-                    cardManaCost.setText("Mana Cost " + singleCardInfo.optString("manaCost"));
-                    cardRarity.setText("Rarity: " + singleCardInfo.getString("rarity"));
-                    cardSet.setText("Set: " + singleCardInfo.getString("setName"));
-                    cardText.setText("Text: " + singleCardInfo.optString("text"));
-                    if(!singleCardInfo.optString("imageUrl").equals("")){
+                    JSONObject singleCardInfo = response.getJSONObject("image_uris");
+                    if(!singleCardInfo.optString("large").equals("")){
                         Glide.with(getApplicationContext())
-                                .load(singleCardInfo.getString("imageUrl"))
+                                .load(singleCardInfo.getString("large"))
                                 .into(cardImage);
                     }else{
                         Glide.with(getApplicationContext())

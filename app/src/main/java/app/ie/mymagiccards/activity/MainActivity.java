@@ -3,6 +3,7 @@ package app.ie.mymagiccards.activity;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -25,6 +26,17 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -41,17 +53,31 @@ import app.ie.mymagiccards.utils.Prefs;
 public class MainActivity extends AppCompatActivity {
 
     //Set up variables
-    private RecyclerView            recyclerView;
-    private CardRecyclerViewAdapter cardRecyclerViewAdapter;
-    private List<Cards>             cardList;
-    private RequestQueue            queue;
-    private AlertDialog.Builder     alertDialog;
-    private AlertDialog             dialog;
-    private EditText                newSearch;
-    private Spinner                 spinner, colorSpinner;
-    private ArrayAdapter            spinnerAdapter;
-    private Button                  searchBtn;
-    private boolean                 blankName, blankType, blankColor;
+    private FirebaseDatabase                database;
+    private DatabaseReference               databaseReference;
+    private FirebaseAuth                    mAuth;
+    private FirebaseAuth.AuthStateListener  mAuthListener;
+    private RecyclerView                    recyclerView;
+    private CardRecyclerViewAdapter         cardRecyclerViewAdapter;
+    private List<Cards>                     cardList;
+    private RequestQueue                    queue;
+    private AlertDialog.Builder             alertDialog;
+    private AlertDialog                     dialog;
+    private EditText                        newSearch;
+    private Spinner                         spinner, colorSpinner;
+    private ArrayAdapter                    spinnerAdapter;
+    private Button                          searchBtn;
+    private boolean                         blankName, blankType, blankColor;
+    private static final String TAG =       "MainActivity";
+
+
+
+    // all looks the same.
+
+
+
+
+
 
 
 
@@ -64,8 +90,43 @@ public class MainActivity extends AppCompatActivity {
         toolbar.setLogo(R.drawable.logomagicnew);
         getSupportActionBar().setTitle("");
 
+        mAuth = FirebaseAuth.getInstance();
+        database = FirebaseDatabase.getInstance();
+        databaseReference = database.getReference("Eoin");
+
+        databaseReference.child("testing").setValue("Hello Eoin There");
+
+
+
+
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                String value = dataSnapshot.getValue(String.class);
+                Toast.makeText(MainActivity.this, value, Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+        mAuthListener = new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                FirebaseUser user = firebaseAuth.getCurrentUser();
+                if (user != null){
+                    Log.i(TAG, "User signed in");
+                }else{
+                    Log.i(TAG, "User signed out");
+                }
+            }
+        };
+
         //Get the queue ready for a HTTP request
         queue = Volley.newRequestQueue(this);
+
 
 
 
@@ -79,17 +140,29 @@ public class MainActivity extends AppCompatActivity {
         Prefs prefs = new Prefs(MainActivity.this);
         String search = prefs.getSearch();
 
-        Log.i("URL", search);
 
         //add cardlist to recyclerview
         cardList = new ArrayList<>();
-        cardList = getCards(search);
+        cardList = getCards();
         cardRecyclerViewAdapter = new CardRecyclerViewAdapter(this, cardList);
         recyclerView.setAdapter(cardRecyclerViewAdapter);
         cardRecyclerViewAdapter.notifyDataSetChanged();//update the recycler view to the changes
 
     }//end onCreate Method
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        mAuth.addAuthStateListener(mAuthListener);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if(mAuthListener != null) {
+            mAuth.removeAuthStateListener(mAuthListener);
+        }
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -111,38 +184,52 @@ public class MainActivity extends AppCompatActivity {
                 // TODO: 18/03/2018 Delete card to Decks method
                 break;
             case R.id.add :
-                // TODO: 18/03/2018 Add card to Decks method
+                String email = "20074820@mail.wit.ie";
+                String password = "123456";
 
+                    mAuth.signInWithEmailAndPassword(email, password)
+                            .addOnCompleteListener(MainActivity.this, new OnCompleteListener<AuthResult>() {
+                                @Override
+                                public void onComplete(@NonNull Task<AuthResult> task) {
+                                    if(!task.isSuccessful()){
+                                      //  Log.i(TAG, databaseReference.toString());
+                                        Toast.makeText(MainActivity.this, "Failed", Toast.LENGTH_SHORT).show();
+                                        databaseReference.setValue("It Didnt Work");
+                                    }else{
+                                        Toast.makeText(MainActivity.this, "Signed in", Toast.LENGTH_SHORT).show();
+                                        databaseReference.setValue("Hey I Got In");
+                                    }
+                                }
+                            });
             }
         return super.onOptionsItemSelected(item);
     }
 
-    public List<Cards> getCards(String search){
+    public List<Cards> getCards(){
         //Send a http request to server to retrive card list
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET,
-                search, new Response.Listener<JSONObject>() {
+                Constants.URL, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 try {
                     //loop trough the data array to pull out the needed information
-                    JSONArray cardInformation = response.getJSONArray("cards");
+                    JSONArray cardInformation = response.getJSONArray("data");
 
                     //Loop trough the cards array and pull back information and attach it to setters
                     for (int i = 0; i < cardInformation.length(); i++) {
                         JSONObject cardObject = cardInformation.getJSONObject(i);
+                        JSONObject images = cardObject.optJSONObject("image_uris");
                         Cards cards = new Cards();
                         cards.setName("Name: "     + cardObject.getString("name"));
                         cards.setColor("Color: "   + cardObject.optString("colors"));
-                        cards.setType("Type: "     + cardObject.getString("type"));
+                        //cards.setType("Type: "     + cardObject.getString("type"));
 
-                        if(!cardObject.getString("rarity").equals("Special")) {
-                            cards.setRarity("Rarity: " + cardObject.getString("rarity"));
+                        if(!cardObject.getString("image_uris").isEmpty()) {
+                            cards.setImageUrl(images.optString("normal"));
                         }else {
-                            Log.i("Special",  cardObject.getString("rarity").toString());
+
                             continue;
                         }
-
-                        cards.setImageUrl(cardObject.optString("imageUrl"));
                         cards.setCardID(cardObject.getString("id"));
                         cardList.add(cards);
                     }
@@ -224,7 +311,7 @@ public class MainActivity extends AppCompatActivity {
         cardList.clear();
         searchCardsByName();
         cardRecyclerViewAdapter.notifyDataSetChanged(); // update the recycler view to the changes
-        Constants.SEARCH_CARD = "https://api.magicthegathering.io/v1/cards?";
+        Constants.SEARCH_CARD = "https://api.scryfall.com/cards/search?q=";
         dialog.dismiss();
     }
 
@@ -232,9 +319,8 @@ public class MainActivity extends AppCompatActivity {
     //search cards by all fields
     public void searchByAll(){
         if(!(newSearch.getText().toString().isEmpty()) && (spinner.getSelectedItem().toString() != "Please Select a Type") && (colorSpinner.getSelectedItem().toString() != "Please Select a Colour")){
-            Constants.SEARCH_CARD += "name=" + newSearch.getText().toString() +
-                                     "&type=" + spinner.getSelectedItem().toString() +
-                                     "&colors=" + colorSpinner.getSelectedItem().toString() ;
+            Constants.SEARCH_CARD += "type:" + spinner.getSelectedItem().toString() +
+                                     "&color:" + colorSpinner.getSelectedItem().toString() ;
             Prefs pref = new Prefs(MainActivity.this);
             String search = Constants.SEARCH_CARD;
             Log.i("Searcher", search);
@@ -250,7 +336,7 @@ public class MainActivity extends AppCompatActivity {
     //search card by name
     public void searchByName(){
         if(!(newSearch.getText().toString().isEmpty())){
-            Constants.SEARCH_CARD += "name=" + newSearch.getText().toString()+ "&pageSize=20&orderBy=name";
+            Constants.SEARCH_CARD += "name&q=" + newSearch.getText().toString();
             Prefs pref = new Prefs(MainActivity.this);
             String search = Constants.SEARCH_CARD;
             Log.i("Searcher", search);
@@ -277,7 +363,7 @@ public class MainActivity extends AppCompatActivity {
     //search card by name and color
     public void searchByNameAndcolor(){
         if(!newSearch.getText().toString().isEmpty() && colorSpinner.getSelectedItem().toString() != "Please Select a Colour"){
-            Constants.SEARCH_CARD += "name="+newSearch.getText().toString()+ "&colors=" + colorSpinner.getSelectedItem().toString();
+            Constants.SEARCH_CARD += "name="+newSearch.getText().toString()+ "&color=" + colorSpinner.getSelectedItem().toString();
             Prefs pref = new Prefs(MainActivity.this);
             String search = Constants.SEARCH_CARD;
 
@@ -289,9 +375,10 @@ public class MainActivity extends AppCompatActivity {
     //search card by type and color
     public void searchByTypeAndcolor(){
         if(spinner.getSelectedItem().toString() != "Please Select a Type" && colorSpinner.getSelectedItem().toString() != "Please Select a Colour"){
-            Constants.SEARCH_CARD += "type="+spinner.getSelectedItem().toString()+ "&colors=" + colorSpinner.getSelectedItem().toString();
+            Constants.SEARCH_CARD += "type:"+spinner.getSelectedItem().toString()+ "+color:" + colorSpinner.getSelectedItem().toString();
             Prefs pref = new Prefs(MainActivity.this);
             String search = Constants.SEARCH_CARD;
+            Log.d("URL Search", search + " claaed from searchbytypeand color");
 
             pref.setSearch(search);
             searchFunction();
@@ -304,9 +391,10 @@ public class MainActivity extends AppCompatActivity {
     //search card by type
     public void searchByType(){
         if(spinner.getSelectedItem().toString() != "Please Select a Type"){
-            Constants.SEARCH_CARD += "type=" + spinner.getSelectedItem().toString();
+            Constants.SEARCH_CARD += "t:" + spinner.getSelectedItem().toString();
             Prefs pref = new Prefs(MainActivity.this);
             String search = Constants.SEARCH_CARD;
+            Log.d("URL Search", search);
             pref.setSearch(search);
             searchFunction();
         }else{
@@ -317,8 +405,9 @@ public class MainActivity extends AppCompatActivity {
 
     //search card by color
     public void searchByColor(){
+        String myColor = "";
         if(colorSpinner.getSelectedItem().toString() != "Please Select a Colour"){
-            Constants.SEARCH_CARD += "colors=" + colorSpinner.getSelectedItem().toString();
+            Constants.SEARCH_CARD += "color:" + colorSpinner.getSelectedItem().toString();
             Prefs pref = new Prefs(MainActivity.this);
             String search = Constants.SEARCH_CARD;
             pref.setSearch(search);
@@ -382,20 +471,27 @@ public class MainActivity extends AppCompatActivity {
             public void onResponse(JSONObject response) {
                 try {
                     //loop trough the data array to pull out the needed information
-                    JSONArray cardInformation = response.getJSONArray("cards");
+                    JSONArray cardInformation = response.getJSONArray("data");
+
 
                     for (int i = 0; i < cardInformation.length(); i++) {
                         JSONObject cardObject = cardInformation.getJSONObject(i);
+                        JSONObject images = cardObject.optJSONObject("image_uris");
                         Cards cards = new Cards();
                         cards.setName("Name: " + cardObject.getString("name"));
                         cards.setColor("Color: "   + cardObject.optString("colors"));
-                        cards.setType("Type: "     + cardObject.getString("type"));
-                        if(!cardObject.getString("rarity").equals("Special")) {
-                            cards.setRarity("Rarity: " + cardObject.getString("rarity"));
-                        }else {
+//                        cards.setType("Type: "     + cardObject.getString("type"));
+//                        if(!cardObject.getString("rarity").equals("Special")) {
+//                            cards.setRarity("Rarity: " + cardObject.getString("rarity"));
+//                        }else {
+//                            continue;
+//                        }
+                        if(!cardObject.optString("image_uris").equals("")){
+                            cards.setImageUrl(images.optString("normal"));
+                        }else{
                             continue;
                         }
-                        cards.setImageUrl(cardObject.optString("imageUrl"));
+
                         cards.setCardID(cardObject.getString("id"));
                         cardList.add(cards);
 

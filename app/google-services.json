@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "154918264722",
+    "firebase_url": "https://androidprojects-b2dd1.firebaseio.com",
+    "project_id": "androidprojects-b2dd1",
+    "storage_bucket": "androidprojects-b2dd1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:154918264722:android:a5f6ed4c38fe95df",
+        "android_client_info": {
+          "package_name": "app.ie.mymagiccards"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "154918264722-a877o3dnhae8i4j4ej3phbuf3ccsvk22.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "app.ie.mymagiccards",
+            "certificate_hash": "57f9f3d1a79fc9f46abafbbd5ec3412cf939e4f6"
+          }
+        },
+        {
+          "client_id": "154918264722-rce10ha7jn80lteb6g3samt5v1f9ghsa.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAwuaANDdle-DTex4r7eWYsNETVCnmVBQY"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "154918264722-rce10ha7jn80lteb6g3samt5v1f9ghsa.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
