@@ -7,20 +7,27 @@ import java.util.List;
  */
 
 public class Decks {
-    private String [] deckName;
+    private String deckName;
     private int CardCount;
     private int landCount;
-    private List<Cards> deckList;
+    private List<String> deckList;
 
-    private Decks(){
+    public Decks(){
 
     }
 
-    public String[] getDeckName() {
+    public Decks(String deckName, int cardCount, int landCount, List<String> deckList) {
+        this.deckName = deckName;
+        CardCount = cardCount;
+        this.landCount = landCount;
+        this.deckList = deckList;
+    }
+
+    public String getDeckName() {
         return deckName;
     }
 
-    public void setDeckName(String[] deckName) {
+    public void setDeckName(String deckName) {
         this.deckName = deckName;
     }
 

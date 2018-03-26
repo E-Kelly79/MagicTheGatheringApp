@@ -1,7 +1,6 @@
 package app.ie.mymagiccards.models;
 
 import java.io.Serializable;
-import java.util.List;
 
 /**
  * Created by Eoin on 24/02/2018.

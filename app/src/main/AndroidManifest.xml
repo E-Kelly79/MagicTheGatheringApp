@@ -12,7 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".activity.MainMenu"
+            android:name="app.ie.mymagiccards.activity.MainMenu"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -21,9 +21,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.CardDetailsActivity" />
-        <activity android:name=".activity.SearchActivity" />
-        <activity android:name=".activity.MainActivity"></activity>
+        <activity android:name="app.ie.mymagiccards.activity.CardDetailsActivity" />
+        <activity android:name="app.ie.mymagiccards.activity.SearchActivity" />
+        <activity android:name="app.ie.mymagiccards.activity.MainActivity"></activity>
     </application>
 
 </manifest>

@@ -1,8 +1,7 @@
 package app.ie.mymagiccards.activity;
 
-import android.annotation.SuppressLint;
-import android.content.Intent;
 import android.os.Bundle;
+
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -17,7 +16,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.Toast;
 import com.android.volley.Request;
@@ -37,6 +35,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -45,6 +44,7 @@ import java.util.List;
 import app.ie.mymagiccards.R;
 import app.ie.mymagiccards.adapters.CardRecyclerViewAdapter;
 import app.ie.mymagiccards.models.Cards;
+import app.ie.mymagiccards.models.Decks;
 import app.ie.mymagiccards.utils.Constants;
 import app.ie.mymagiccards.utils.Prefs;
 
@@ -72,11 +72,6 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-    // all looks the same.
-
-
-
-
 
 
 
@@ -91,38 +86,42 @@ public class MainActivity extends AppCompatActivity {
         getSupportActionBar().setTitle("");
 
         mAuth = FirebaseAuth.getInstance();
+
         database = FirebaseDatabase.getInstance();
-        databaseReference = database.getReference("Eoin");
+        databaseReference = database.getReference("Decks");
+        databaseReference.setValue("Athersquall");
 
-        databaseReference.child("testing").setValue("Hello Eoin There");
-
-
-
-
-        databaseReference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                String value = dataSnapshot.getValue(String.class);
-                Toast.makeText(MainActivity.this, value, Toast.LENGTH_LONG).show();
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
+//        databaseReference.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(DataSnapshot dataSnapshot) {
+//                // This method is called once with the initial value and again
+//                // whenever data at this location is updated.
+//                String value = dataSnapshot.getValue(Decks.class);
+//                Log.d(TAG, "Value is: " + value);
+//            }
+//
+//            @Override
+//            public void onCancelled(DatabaseError error) {
+//                // Failed to read value
+//                Log.w(TAG, "Failed to read value.", error.toException());
+//            }
+//        });
 
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 FirebaseUser user = firebaseAuth.getCurrentUser();
-                if (user != null){
+
+                if(user != null){
+                    //User is signed in
                     Log.i(TAG, "User signed in");
                 }else{
-                    Log.i(TAG, "User signed out");
+                    //User is signed out
+                    Log.i(TAG, "User signed in");
                 }
             }
         };
+
 
         //Get the queue ready for a HTTP request
         queue = Volley.newRequestQueue(this);
@@ -151,17 +150,19 @@ public class MainActivity extends AppCompatActivity {
     }//end onCreate Method
 
     @Override
-    protected void onStart() {
+    public void onStart() {
         super.onStart();
-        mAuth.addAuthStateListener(mAuthListener);
+        // Check if user is signed in (non-null) and update UI accordingly.
+       mAuth.addAuthStateListener(mAuthListener);
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        if(mAuthListener != null) {
+        if(mAuthListener != null){
             mAuth.removeAuthStateListener(mAuthListener);
         }
+
     }
 
     @Override
@@ -184,23 +185,32 @@ public class MainActivity extends AppCompatActivity {
                 // TODO: 18/03/2018 Delete card to Decks method
                 break;
             case R.id.add :
-                String email = "20074820@mail.wit.ie";
-                String password = "123456";
+                String email = "k.eoin@yahoo.ie";
+                String password = "eoin1234";
 
+                if(email.equals("k.eoin@yahoo.ie") && password.equals("eoin1234")){
                     mAuth.signInWithEmailAndPassword(email, password)
                             .addOnCompleteListener(MainActivity.this, new OnCompleteListener<AuthResult>() {
                                 @Override
                                 public void onComplete(@NonNull Task<AuthResult> task) {
                                     if(!task.isSuccessful()){
-                                      //  Log.i(TAG, databaseReference.toString());
-                                        Toast.makeText(MainActivity.this, "Failed", Toast.LENGTH_SHORT).show();
-                                        databaseReference.setValue("It Didnt Work");
+                                        Toast.makeText(MainActivity.this, "Failed Sign in", Toast.LENGTH_LONG).show();
                                     }else{
-                                        Toast.makeText(MainActivity.this, "Signed in", Toast.LENGTH_SHORT).show();
-                                        databaseReference.setValue("Hey I Got In");
+                                        Toast.makeText(MainActivity.this, "Signed in", Toast.LENGTH_LONG).show();
+                                        List<String> cardDeck = new ArrayList<>();
+                                        cardDeck.add("Athersquall");
+                                        cardDeck.add("Athersquall1");
+                                        cardDeck.add("Athersquall23");
+                                        cardDeck.add("Athersquall3");
+
+                                        Decks deck = new Decks("Athersquall", 60, 23, cardDeck);
+                                        databaseReference.setValue(deck);
                                     }
                                 }
                             });
+                }
+
+                break;
             }
         return super.onOptionsItemSelected(item);
     }

@@ -3,9 +3,6 @@ package app.ie.mymagiccards.utils;
 import android.app.Activity;
 import android.content.SharedPreferences;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * Created by Eoin on 24/02/2018.
  */
