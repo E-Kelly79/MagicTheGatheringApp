@@ -2,7 +2,6 @@ package app.ie.mymagiccards.activity;
 
 import android.os.Bundle;
 
-import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -24,16 +23,8 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 
 import org.json.JSONArray;
@@ -44,7 +35,6 @@ import java.util.List;
 import app.ie.mymagiccards.R;
 import app.ie.mymagiccards.adapters.CardRecyclerViewAdapter;
 import app.ie.mymagiccards.models.Cards;
-import app.ie.mymagiccards.models.Decks;
 import app.ie.mymagiccards.utils.Constants;
 import app.ie.mymagiccards.utils.Prefs;
 
@@ -55,8 +45,6 @@ public class MainActivity extends AppCompatActivity {
     //Set up variables
     private FirebaseDatabase                database;
     private DatabaseReference               databaseReference;
-    private FirebaseAuth                    mAuth;
-    private FirebaseAuth.AuthStateListener  mAuthListener;
     private RecyclerView                    recyclerView;
     private CardRecyclerViewAdapter         cardRecyclerViewAdapter;
     private List<Cards>                     cardList;
@@ -85,11 +73,10 @@ public class MainActivity extends AppCompatActivity {
         toolbar.setLogo(R.drawable.logomagicnew);
         getSupportActionBar().setTitle("");
 
-        mAuth = FirebaseAuth.getInstance();
+
 
         database = FirebaseDatabase.getInstance();
         databaseReference = database.getReference("Decks");
-        databaseReference.setValue("Athersquall");
 
 //        databaseReference.addValueEventListener(new ValueEventListener() {
 //            @Override
@@ -106,22 +93,6 @@ public class MainActivity extends AppCompatActivity {
 //                Log.w(TAG, "Failed to read value.", error.toException());
 //            }
 //        });
-
-        mAuthListener = new FirebaseAuth.AuthStateListener() {
-            @Override
-            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                FirebaseUser user = firebaseAuth.getCurrentUser();
-
-                if(user != null){
-                    //User is signed in
-                    Log.i(TAG, "User signed in");
-                }else{
-                    //User is signed out
-                    Log.i(TAG, "User signed in");
-                }
-            }
-        };
-
 
         //Get the queue ready for a HTTP request
         queue = Volley.newRequestQueue(this);
@@ -147,23 +118,9 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setAdapter(cardRecyclerViewAdapter);
         cardRecyclerViewAdapter.notifyDataSetChanged();//update the recycler view to the changes
 
+
     }//end onCreate Method
 
-    @Override
-    public void onStart() {
-        super.onStart();
-        // Check if user is signed in (non-null) and update UI accordingly.
-       mAuth.addAuthStateListener(mAuthListener);
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        if(mAuthListener != null){
-            mAuth.removeAuthStateListener(mAuthListener);
-        }
-
-    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -178,40 +135,15 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         switch (id) {
-            case R.id.search :
+            case R.id.search:
                 showInputDialog();
                 break;
-            case R.id.delete :
-                // TODO: 18/03/2018 Delete card to Decks method
-                break;
-            case R.id.add :
-                String email = "k.eoin@yahoo.ie";
-                String password = "eoin1234";
-
-                if(email.equals("k.eoin@yahoo.ie") && password.equals("eoin1234")){
-                    mAuth.signInWithEmailAndPassword(email, password)
-                            .addOnCompleteListener(MainActivity.this, new OnCompleteListener<AuthResult>() {
-                                @Override
-                                public void onComplete(@NonNull Task<AuthResult> task) {
-                                    if(!task.isSuccessful()){
-                                        Toast.makeText(MainActivity.this, "Failed Sign in", Toast.LENGTH_LONG).show();
-                                    }else{
-                                        Toast.makeText(MainActivity.this, "Signed in", Toast.LENGTH_LONG).show();
-                                        List<String> cardDeck = new ArrayList<>();
-                                        cardDeck.add("Athersquall");
-                                        cardDeck.add("Athersquall1");
-                                        cardDeck.add("Athersquall23");
-                                        cardDeck.add("Athersquall3");
-
-                                        Decks deck = new Decks("Athersquall", 60, 23, cardDeck);
-                                        databaseReference.setValue(deck);
-                                    }
-                                }
-                            });
-                }
+            case R.id.delete:
 
                 break;
-            }
+            case R.id.add:
+                break;
+        }
         return super.onOptionsItemSelected(item);
     }
 

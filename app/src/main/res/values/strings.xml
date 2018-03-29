@@ -21,6 +21,14 @@
     <string name="black">black</string>
     <string name="green">green</string>
     <string name="red">red</string>
+    <string name="login_email">Email</string>
+    <string name="login_password">Password</string>
+    <string name="login_button">Login</string>
+    <string name="create_account">Create Account</string>
+    <string name="life">Game Tools</string>
+    <string name="decks">Decks</string>
+    <string name="players">Users</string>
+    <string name="card_search">Card Search</string>
 
     <string-array name="type_array">
         <item>Please Select a Type</item>

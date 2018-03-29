@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/rust"
+    android:background="@drawable/gradient"
     android:backgroundTintMode="multiply"
     tools:context="app.ie.mymagiccards.activity.MainMenu">
 
@@ -13,7 +13,7 @@
         android:id="@+id/lifeButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="37dp"
+        android:layout_marginStart="36dp"
         android:background="@drawable/life"
         app:layout_constraintBaseline_toBaselineOf="@+id/deckButton"
         app:layout_constraintStart_toStartOf="parent" />
@@ -22,11 +22,13 @@
         android:id="@+id/deckButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-       android:background="@drawable/decks"
+        android:background="@drawable/decks"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/searchButtonMenu"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/searchButtonMenu"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.452" />
 
     <Button
         android:id="@+id/playerButton"
@@ -59,5 +61,65 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/magiclogo" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/life"
+        android:textColor="@color/colorAccent"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/lifeButton"
+        app:layout_constraintStart_toStartOf="@+id/lifeButton"
+        app:layout_constraintTop_toBottomOf="@+id/lifeButton" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/decks"
+        android:textColor="@color/colorAccent"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/deckButton"
+        app:layout_constraintStart_toStartOf="@+id/deckButton"
+        app:layout_constraintTop_toBottomOf="@+id/deckButton" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/players"
+        android:textColor="@color/colorAccent"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/playerButton"
+        app:layout_constraintStart_toStartOf="@+id/playerButton"
+        app:layout_constraintTop_toBottomOf="@+id/playerButton" />
+
+    <TextView
+        android:id="@+id/textView5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/card_search"
+        android:textColor="@color/colorAccent"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/searchButtonMenu"
+        app:layout_constraintStart_toStartOf="@+id/searchButtonMenu"
+        app:layout_constraintTop_toBottomOf="@+id/searchButtonMenu" />
 
 </android.support.constraint.ConstraintLayout>

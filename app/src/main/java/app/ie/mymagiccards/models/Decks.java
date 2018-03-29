@@ -7,43 +7,69 @@ import java.util.List;
  */
 
 public class Decks {
-    private String deckName;
-    private int CardCount;
-    private int landCount;
+    private String cardName;
+    private int cardCount;
     private List<String> deckList;
+    private String cardImage;
+    private String userid;
 
     public Decks(){
 
     }
 
-    public Decks(String deckName, int cardCount, int landCount, List<String> deckList) {
-        this.deckName = deckName;
-        CardCount = cardCount;
-        this.landCount = landCount;
+    public Decks(String deckName, int cardCount, List<String> deckList, String image, String userid) {
+        this.cardName = deckName;
+        this.cardCount = cardCount;
         this.deckList = deckList;
+        this.cardImage = image;
+        this.userid = userid;
     }
 
-    public String getDeckName() {
-        return deckName;
+    public Decks(String image, String userid) {
+        this.cardImage   =   image;
+        this.userid     =   userid;
+
     }
 
-    public void setDeckName(String deckName) {
-        this.deckName = deckName;
+
+    public String getCardName() {
+        return cardName;
+    }
+
+    public void setCardName(String cardName) {
+        this.cardName = cardName;
+    }
+
+    public String getCardImage() {
+        return cardImage;
+    }
+
+    public void setCardImage(String cardImage) {
+        this.cardImage = cardImage;
     }
 
     public int getCardCount() {
-        return CardCount;
+        return cardCount;
     }
 
     public void setCardCount(int cardCount) {
-        CardCount = cardCount;
+        this.cardCount = cardCount;
     }
 
-    public int getLandCount() {
-        return landCount;
+    public List<String> getDeckList() {
+        return deckList;
     }
 
-    public void setLandCount(int landCount) {
-        this.landCount = landCount;
+    public void setDeckList(List<String> deckList) {
+        this.deckList = deckList;
+    }
+
+
+    public String getUserid() {
+        return userid;
+    }
+
+    public void setUserid(String userid) {
+        this.userid = userid;
     }
 }

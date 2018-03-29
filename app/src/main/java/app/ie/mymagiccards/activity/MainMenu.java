@@ -1,5 +1,6 @@
 package app.ie.mymagiccards.activity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -12,6 +13,7 @@ import app.ie.mymagiccards.R;
 public class MainMenu extends AppCompatActivity {
 
     private Button search, decks, players, life;
+    private ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,22 +27,31 @@ public class MainMenu extends AppCompatActivity {
         search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainMenu.this, MainActivity.class);
-                startActivity(intent);
+
+                Intent searching = new Intent(MainMenu.this, MainActivity.class);
+                startActivity(searching);
+
+                //dismiss or cancel the dialog
+
+
+
             }
         });
 
         decks.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(MainMenu.this, "Decks button pressed Coming soon", Toast.LENGTH_SHORT).show();
+                Intent searching = new Intent(MainMenu.this, MyDecks.class);
+                startActivity(searching);
+
             }
         });
 
         players.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(MainMenu.this, "Players button pressed Coming soon", Toast.LENGTH_SHORT).show();
+                Intent login = new Intent(MainMenu.this, Login.class);
+                startActivity(login);
             }
         });
 
