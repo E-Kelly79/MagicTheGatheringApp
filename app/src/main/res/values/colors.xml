@@ -4,6 +4,8 @@
     <color name="colorPrimaryDark">#1b1b1b</color>
     <color name="colorAccent">#ffffff</color>
     <color name="trans">#33000000</color>
-    <color name="Dwan1">#BA8B02</color>
-    <color name="Dwan2">#181818</color>
+    <color name="Dwan1">#ef4c25</color>
+    <color name="Dwan2">#f8a129</color>
+    <color name="Honey">#aaeb9605</color>
+    <color name="HoneyGreen">#aa427a3b</color>
 </resources>

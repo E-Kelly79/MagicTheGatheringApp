@@ -12,11 +12,13 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.huxq17.swipecardsview.SwipeCardsView;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import app.ie.mymagiccards.R;
+import app.ie.mymagiccards.adapters.CardAdapter;
 import app.ie.mymagiccards.adapters.DeckRecyclerViewAdapter;
 import app.ie.mymagiccards.models.Decks;
 
@@ -29,6 +31,8 @@ public class MyDecks extends AppCompatActivity {
     private List<Decks>             deckList;
     private FirebaseUser            user;
     private FirebaseAuth            mAuth;
+    private SwipeCardsView          swipeCardsView;
+    private CardAdapter             cardAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,9 +45,12 @@ public class MyDecks extends AppCompatActivity {
         databaseReference = database.getReference().child("Decks").child("Athersquall");
 
         deckList = new ArrayList<>();
-        recyclerView = findViewById(R.id.deckRecyclerView);
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        //recyclerView = findViewById(R.id.deckRecyclerView);
+//        recyclerView.setHasFixedSize(true);
+//        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        swipeCardsView = findViewById(R.id.swipeCardView);
+        swipeCardsView.retainLastCard(true);
+        swipeCardsView.enableSwipe(true);
     }
 
     @Override
@@ -55,9 +62,13 @@ public class MyDecks extends AppCompatActivity {
                 Decks deck = dataSnapshot.getValue(Decks.class);
                 deckList.add(deck);
 
-                adapter = new DeckRecyclerViewAdapter(MyDecks.this, deckList);
-                recyclerView.setAdapter(adapter);
-                adapter.notifyDataSetChanged();
+                cardAdapter = new CardAdapter(deckList, MyDecks.this);
+                swipeCardsView.setAdapter(cardAdapter);
+
+
+                //adapter = new DeckRecyclerViewAdapter(MyDecks.this, deckList);
+//                recyclerView.setAdapter(adapter);
+//                adapter.notifyDataSetChanged();
 
             }
 

@@ -29,6 +29,8 @@
     <string name="decks">Decks</string>
     <string name="players">Users</string>
     <string name="card_search">Card Search</string>
+    <string name="signout">signout</string>
+    <string name="card_name">Card Name</string>
 
     <string-array name="type_array">
         <item>Please Select a Type</item>

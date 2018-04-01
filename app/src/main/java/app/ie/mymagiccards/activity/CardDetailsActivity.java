@@ -104,11 +104,15 @@ public class CardDetailsActivity extends AppCompatActivity {
             case R.id.delete:
                 break;
             case R.id.add:
-
                 Log.i("Deck Name", deck.getCardImage());
                 Log.i("Deck Image", deck.getCardImage());
                 addCardToDeck(deck.getCardName(), deck.getCardImage());
 
+                break;
+            case R.id.signout:
+                if(mAuth != null && user != null){
+                    mAuth.signOut();
+                }
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -123,8 +127,9 @@ public class CardDetailsActivity extends AppCompatActivity {
                 dataToSave.put("userid", user.getUid());
                 newDeck.getRef().child("").setValue(dataToSave);
 
-        startActivity(new Intent(CardDetailsActivity.this, MainActivity.class));
+                startActivity(new Intent(CardDetailsActivity.this, MainActivity.class));
                 customType(CardDetailsActivity.this,"up-to-bottom");
+                finish();
     }
 
     private void setupUi() {

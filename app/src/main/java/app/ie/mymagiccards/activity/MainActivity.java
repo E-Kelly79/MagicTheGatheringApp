@@ -23,6 +23,8 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -45,6 +47,8 @@ public class MainActivity extends AppCompatActivity {
     //Set up variables
     private FirebaseDatabase                database;
     private DatabaseReference               databaseReference;
+    private FirebaseUser                    user;
+    private FirebaseAuth                    mAuth;
     private RecyclerView                    recyclerView;
     private CardRecyclerViewAdapter         cardRecyclerViewAdapter;
     private List<Cards>                     cardList;
@@ -73,8 +77,8 @@ public class MainActivity extends AppCompatActivity {
         toolbar.setLogo(R.drawable.logomagicnew);
         getSupportActionBar().setTitle("");
 
-
-
+        mAuth = FirebaseAuth.getInstance();
+        user = mAuth.getCurrentUser();
         database = FirebaseDatabase.getInstance();
         databaseReference = database.getReference("Decks");
 
@@ -142,6 +146,13 @@ public class MainActivity extends AppCompatActivity {
 
                 break;
             case R.id.add:
+
+                break;
+
+            case R.id.signout:
+                if(mAuth != null && user != null){
+                    mAuth.signOut();
+                }
                 break;
         }
         return super.onOptionsItemSelected(item);

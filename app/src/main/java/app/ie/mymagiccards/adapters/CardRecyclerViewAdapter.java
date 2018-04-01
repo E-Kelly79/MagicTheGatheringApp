@@ -13,6 +13,7 @@ import com.bumptech.glide.Glide;
 import java.util.List;
 import app.ie.mymagiccards.R;
 import app.ie.mymagiccards.activity.CardDetailsActivity;
+import app.ie.mymagiccards.activity.MainActivity;
 import app.ie.mymagiccards.models.Cards;
 
 
@@ -68,7 +69,7 @@ public class CardRecyclerViewAdapter extends RecyclerView.Adapter<CardRecyclerVi
         TextView cardName, cardColor, cardType, cardRarity;
         ImageView cardImage;
 
-        public ViewHolder(View itemView, final Context ctx) {
+        public ViewHolder(final View itemView, final Context ctx) {
             super(itemView);
             context = ctx;
 
@@ -85,6 +86,8 @@ public class CardRecyclerViewAdapter extends RecyclerView.Adapter<CardRecyclerVi
                     Intent intent = new Intent(context, CardDetailsActivity.class);
                     intent.putExtra("card", card);
                     ctx.startActivity(intent);
+                    ((MainActivity)ctx).recreate();
+
                 }
             });
         }
