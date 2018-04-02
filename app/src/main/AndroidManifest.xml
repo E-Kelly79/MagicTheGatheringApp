@@ -25,7 +25,8 @@
         <activity android:name=".activity.SearchActivity" />
         <activity android:name=".activity.MainActivity" />
         <activity android:name=".activity.Login" />
-        <activity android:name=".activity.MyDecks"></activity>
+        <activity android:name=".activity.MyDecks" />
+        <activity android:name=".activity.LifeCounter"></activity>
     </application>
 
 </manifest>

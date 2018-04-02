@@ -9,59 +9,52 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import app.ie.mymagiccards.R;
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class MainMenu extends AppCompatActivity {
 
-    private Button search, decks, players, life;
-    private ProgressDialog progressDialog;
+    @BindView(R.id.searchButtonMenu) Button search;
+    @BindView(R.id.deckButton)       Button decks;
+    @BindView(R.id.playerButton)     Button players;
+    @BindView(R.id.lifeButton)       Button life;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_menu);
-        search = findViewById(R.id.searchButtonMenu);
-        decks = findViewById(R.id.deckButton);
-        players = findViewById(R.id.playerButton);
-        life = findViewById(R.id.lifeButton);
 
-        search.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                Intent searching = new Intent(MainMenu.this, MainActivity.class);
-                startActivity(searching);
-
-                //dismiss or cancel the dialog
-
-
-
-            }
-        });
-
-        decks.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent searching = new Intent(MainMenu.this, MyDecks.class);
-                startActivity(searching);
-
-            }
-        });
-
-        players.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent login = new Intent(MainMenu.this, Login.class);
-                startActivity(login);
-            }
-        });
-
-        life.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(MainMenu.this, "Life button pressed Coming soon", Toast.LENGTH_SHORT).show();
-            }
-        });
-
+        ButterKnife.bind(this);
 
     }
+    @OnClick(R.id.searchButtonMenu)
+    public void search(View view){
+        Intent searching = new Intent(MainMenu.this, MainActivity.class);
+        startActivity(searching);
+    }
+
+    @OnClick(R.id.playerButton)
+    public void login(View view){
+        Intent login = new Intent(MainMenu.this, Login.class);
+        startActivity(login);
+    }
+
+    @OnClick(R.id.deckButton)
+    public void decks(View view){
+        Intent login = new Intent(MainMenu.this, MyDecks.class);
+        startActivity(login);
+    }
+
+    @OnClick(R.id.lifeButton)
+    public void lifeTools(View view){
+        Intent login = new Intent(MainMenu.this, LifeCounter.class);
+        startActivity(login);
+    }
+
+
+
+
+
+
 }
