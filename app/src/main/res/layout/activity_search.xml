@@ -50,7 +50,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:text="@string/search_type"
-        app:layout_constraintBaseline_toBaselineOf="@+id/searchTypeBox"
+        app:layout_constraintBaseline_toBaselineOf="@+id/typeSpinner"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
@@ -83,7 +83,7 @@
         app:layout_constraintTop_toBottomOf="@+id/searchBoosterBox" />
 
     <EditText
-        android:id="@+id/searchTypeBox"
+        android:id="@+id/typeSpinner"
         android:layout_width="210dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
@@ -115,7 +115,7 @@
         android:entries="@array/type_array"
         android:prompt="@string/booster_prompt"
         app:layout_constraintStart_toEndOf="@+id/searchBooster"
-        app:layout_constraintTop_toBottomOf="@+id/searchTypeBox" />
+        app:layout_constraintTop_toBottomOf="@+id/typeSpinner" />
 
     <CheckBox
         android:id="@+id/white"

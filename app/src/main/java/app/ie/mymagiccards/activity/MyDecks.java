@@ -21,34 +21,30 @@ import app.ie.mymagiccards.R;
 import app.ie.mymagiccards.adapters.CardAdapter;
 import app.ie.mymagiccards.adapters.DeckRecyclerViewAdapter;
 import app.ie.mymagiccards.models.Decks;
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 public class MyDecks extends AppCompatActivity {
 
     private FirebaseDatabase        database;
     private DatabaseReference       databaseReference;
-    private RecyclerView            recyclerView;
-    private DeckRecyclerViewAdapter adapter;
     private List<Decks>             deckList;
     private FirebaseUser            user;
     private FirebaseAuth            mAuth;
-    private SwipeCardsView          swipeCardsView;
     private CardAdapter             cardAdapter;
+    @BindView(R.id.swipeCardView)SwipeCardsView swipeCardsView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_decks);
-
+        ButterKnife.bind(this);
         mAuth = FirebaseAuth.getInstance();
         user = mAuth.getCurrentUser();
         database = FirebaseDatabase.getInstance();
         databaseReference = database.getReference().child("Decks").child("Athersquall");
 
         deckList = new ArrayList<>();
-        //recyclerView = findViewById(R.id.deckRecyclerView);
-//        recyclerView.setHasFixedSize(true);
-//        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        swipeCardsView = findViewById(R.id.swipeCardView);
         swipeCardsView.retainLastCard(true);
         swipeCardsView.enableSwipe(true);
     }
@@ -64,11 +60,6 @@ public class MyDecks extends AppCompatActivity {
 
                 cardAdapter = new CardAdapter(deckList, MyDecks.this);
                 swipeCardsView.setAdapter(cardAdapter);
-
-
-                //adapter = new DeckRecyclerViewAdapter(MyDecks.this, deckList);
-//                recyclerView.setAdapter(adapter);
-//                adapter.notifyDataSetChanged();
 
             }
 

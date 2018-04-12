@@ -39,28 +39,28 @@ import app.ie.mymagiccards.adapters.CardRecyclerViewAdapter;
 import app.ie.mymagiccards.models.Cards;
 import app.ie.mymagiccards.utils.Constants;
 import app.ie.mymagiccards.utils.Prefs;
-
+import butterknife.BindView;
 
 
 public class MainActivity extends AppCompatActivity {
 
     //Set up variables
-    private FirebaseDatabase                database;
-    private DatabaseReference               databaseReference;
-    private FirebaseUser                    user;
-    private FirebaseAuth                    mAuth;
-    private RecyclerView                    recyclerView;
-    private CardRecyclerViewAdapter         cardRecyclerViewAdapter;
-    private List<Cards>                     cardList;
-    private RequestQueue                    queue;
-    private AlertDialog.Builder             alertDialog;
-    private AlertDialog                     dialog;
-    private EditText                        newSearch;
-    private Spinner                         spinner, colorSpinner;
-    private ArrayAdapter                    spinnerAdapter;
-    private Button                          searchBtn;
-    private boolean                         blankName, blankType, blankColor;
-    private static final String TAG =       "MainActivity";
+    private FirebaseDatabase        database;
+    private DatabaseReference       databaseReference;
+    private FirebaseUser            user;
+    private FirebaseAuth            mAuth;
+    private CardRecyclerViewAdapter cardRecyclerViewAdapter;
+    private List<Cards>             cardList;
+    private RequestQueue            queue;
+    private AlertDialog.Builder     alertDialog;
+    private AlertDialog             dialog;
+    private ArrayAdapter            spinnerAdapter;
+    private RecyclerView            recyclerView;
+    private EditText                newSearch;
+    private Spinner                 spinner;
+    private Spinner                 colorSpinner;
+    private Button                  searchBtn;
+    private boolean                 blankName, blankType, blankColor;
 
 
 
@@ -212,9 +212,9 @@ public class MainActivity extends AppCompatActivity {
         alertDialog = new AlertDialog.Builder(this);
         View view = getLayoutInflater().inflate(R.layout.dialog_view, null);
         newSearch = view.findViewById(R.id.searchEdt);
-        searchBtn = view.findViewById(R.id.submitBtn);
-        spinner = view.findViewById(R.id.searchTypeBox);
-        colorSpinner = view.findViewById(R.id.colorPickerSpinner);
+        searchBtn = view.findViewById(R.id.searchBtn);
+        spinner = view.findViewById(R.id.typeSpinner);
+        colorSpinner = view.findViewById(R.id.colorSpinner);
 
         //attach spinners to an addapter
         spinnerAdapter = ArrayAdapter.createFromResource(MainActivity.this, R.array.type_array, android.R.layout.simple_spinner_item);
@@ -374,7 +374,7 @@ public class MainActivity extends AppCompatActivity {
 
     //not sure if needed
     public void setUpSpinner(View view){
-        spinner = view.findViewById(R.id.searchTypeBox);
+        spinner = view.findViewById(R.id.typeSpinner);
         spinnerAdapter = ArrayAdapter.createFromResource(MainActivity.this, R.array.type_array, android.R.layout.simple_spinner_item);
         spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(spinnerAdapter);
@@ -393,7 +393,7 @@ public class MainActivity extends AppCompatActivity {
 
     //not sure if needed
     public void setUpColorSpinner(View view){
-        colorSpinner = view.findViewById(R.id.searchTypeBox);
+        colorSpinner = view.findViewById(R.id.typeSpinner);
         spinnerAdapter = ArrayAdapter.createFromResource(MainActivity.this, R.array.type_array, android.R.layout.simple_spinner_item);
         spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         colorSpinner.setAdapter(spinnerAdapter);

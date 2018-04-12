@@ -18,41 +18,32 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 import app.ie.mymagiccards.R;
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 public class Login extends AppCompatActivity {
 
     private FirebaseAuth                    mAuth;
     private FirebaseAuth.AuthStateListener  mAuthListener;
     private FirebaseUser                    user;
-    private Button                          createAccount, login;
-    private EditText                        emailLogin, passwordLogin;
+
+    @BindView(R.id.createAccountBtn)Button  createAccount;
+    @BindView(R.id.loginBtn)        Button  login;
+    @BindView(R.id.emailLogin)     EditText emailLogin;
+    @BindView(R.id.passwordLogin)  EditText passwordLogin;
 
 
-    /*{
-  "rules": {
-    ".read": "auth != null",
-    ".write": "auth != null"
-  }
-}
-*/
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        login =         findViewById(R.id.loginBtn);
-        createAccount = findViewById(R.id.createAccountBtn);
-        emailLogin =    findViewById(R.id.emailLogin);
-        passwordLogin = findViewById(R.id.passwordLogin);
+        ButterKnife.bind(this);
 
         mAuth = FirebaseAuth.getInstance();
-
-
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 user = firebaseAuth.getCurrentUser();
-
-                //Log.i("User ID", user.toString());
                 if(user != null){
                     Toast.makeText(Login.this, "Signed in", Toast.LENGTH_LONG).show();
                     startActivity(new Intent(Login.this, MyDecks.class));

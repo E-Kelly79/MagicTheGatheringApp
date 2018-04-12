@@ -41,6 +41,8 @@ import app.ie.mymagiccards.R;
 import app.ie.mymagiccards.models.Cards;
 import app.ie.mymagiccards.models.Decks;
 import app.ie.mymagiccards.utils.Constants;
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 import static maes.tech.intentanim.CustomIntent.customType;
 
@@ -52,16 +54,14 @@ public class CardDetailsActivity extends AppCompatActivity {
     private FirebaseDatabase    database;
     private FirebaseUser        user;
     private FirebaseAuth        mAuth;
-    private Uri                 imagePath;
     private Cards               cards;
-    private TextView            cardName, cardManaCost, cardType,
-                                cardColor, cardText, cardRarity,
-                                cardSet;
-    private ProgressDialog      progressDialog;
-    private ImageView           cardImage;
     private RequestQueue        queue;
     private String              cardid;
     private Decks               deck;
+
+    @BindView(R.id.cardNameDetails)TextView  cardName;
+    @BindView(R.id.cardImageDetail)ImageView cardImage;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,22 +69,21 @@ public class CardDetailsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_card_details);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        ButterKnife.bind(this);
         mAuth = FirebaseAuth.getInstance();
         user = mAuth.getCurrentUser();
         database = FirebaseDatabase.getInstance();
         decks = database.getReference().child("Decks").child("Athersquall");
         decks.keepSynced(true);
-
         deck = new Decks();
 
-;
         Slide slide = new Slide(Gravity.RIGHT);
         getWindow().setReenterTransition(slide);
         queue = Volley.newRequestQueue(this);
+
         //get the card id from the intent
         cards = (Cards) getIntent().getSerializableExtra("card");
         cardid = cards.getCardID();
-        setupUi();
         getCardDetails(cardid);
 
     }
@@ -132,16 +131,6 @@ public class CardDetailsActivity extends AppCompatActivity {
                 finish();
     }
 
-    private void setupUi() {
-        cardName = findViewById(R.id.cardNameDetails);
-//        cardManaCost = findViewById(R.id.manaCost);
-//        cardType = findViewById(R.id.cardTypeDetails);
-//        cardColor = findViewById(R.id.colorDetailsId);
-//        cardRarity = findViewById(R.id.cardRarityDetails);
-//        cardText = findViewById(R.id.cardTextDetails);
-//        cardSet = findViewById(R.id.setCardDetails);
-        cardImage = findViewById(R.id.cardImageDetail);
-    }
 
     private void getCardDetails(String id) {
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, Constants.SINGLE_CARD + id, new Response.Listener<JSONObject>() {
