@@ -7,7 +7,7 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="app.ie.mymagiccards.activity.MainActivity"
     tools:showIn="@layout/activity_main"
-    android:background="@drawable/lava">
+    android:background="@drawable/rust">
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerView"

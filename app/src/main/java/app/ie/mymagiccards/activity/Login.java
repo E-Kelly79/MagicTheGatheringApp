@@ -20,6 +20,7 @@ import com.google.firebase.auth.FirebaseUser;
 import app.ie.mymagiccards.R;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class Login extends AppCompatActivity {
 
@@ -84,6 +85,11 @@ public class Login extends AppCompatActivity {
                         }
                     }
                 });
+    }
+
+    @OnClick(R.id.createAccountBtn)
+    public void register(){
+        startActivity(new Intent(Login.this, Signup.class));
     }
 
     @Override

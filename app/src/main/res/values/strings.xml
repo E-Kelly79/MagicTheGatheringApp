@@ -31,6 +31,10 @@
     <string name="card_search">Card Search</string>
     <string name="signout">signout</string>
     <string name="card_name">Card Name</string>
+    <string name="name_signup">Name</string>
+    <string name="email_signup">Email</string>
+    <string name="password_signup">password</string>
+    <string name="register_btn">Register</string>
 
     <string-array name="type_array">
         <item>Please Select a Type</item>

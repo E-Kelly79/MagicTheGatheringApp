@@ -27,7 +27,8 @@
         <activity android:name=".activity.Login" />
         <activity android:name=".activity.MyDecks" />
         <activity android:name=".activity.LifeCounter" />
-        <activity android:name=".activity.StepCounterTest"></activity>
+        <activity android:name=".activity.StepCounterTest" />
+        <activity android:name=".activity.Signup"></activity>
     </application>
 
 </manifest>
