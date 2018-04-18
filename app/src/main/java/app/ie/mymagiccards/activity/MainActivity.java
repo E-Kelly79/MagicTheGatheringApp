@@ -1,5 +1,6 @@
 package app.ie.mymagiccards.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import android.support.v7.app.AlertDialog;
@@ -16,6 +17,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -60,6 +62,7 @@ public class MainActivity extends AppCompatActivity {
     private Spinner                 spinner;
     private Spinner                 colorSpinner;
     private Button                  searchBtn;
+    private TextView                advancedSearch;
     private boolean                 blankName, blankType, blankColor;
 
 
@@ -215,6 +218,8 @@ public class MainActivity extends AppCompatActivity {
         searchBtn = view.findViewById(R.id.searchBtn);
         spinner = view.findViewById(R.id.typeSpinner);
         colorSpinner = view.findViewById(R.id.colorSpinner);
+        advancedSearch = view.findViewById(R.id.advancedSearch);
+
 
         //attach spinners to an addapter
         spinnerAdapter = ArrayAdapter.createFromResource(MainActivity.this, R.array.type_array, android.R.layout.simple_spinner_item);
@@ -255,6 +260,13 @@ public class MainActivity extends AppCompatActivity {
 
                 Log.i("Searcher", Constants.SEARCH_CARD);
 
+            }
+        });
+
+        advancedSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(MainActivity.this, SearchActivity.class));
             }
         });
     }

@@ -15,6 +15,14 @@ public class Prefs {
         sharedPreferences = activity.getPreferences(activity.MODE_PRIVATE);
     }
 
+    public void setKey(String key){
+        sharedPreferences.edit().putString("key", key). commit();
+    }
+
+    public String getKey(){
+       return sharedPreferences.getString("key", "keys");
+    }
+
     public void setSearch(String search){
         sharedPreferences.edit().putString("search", search). commit();
     }

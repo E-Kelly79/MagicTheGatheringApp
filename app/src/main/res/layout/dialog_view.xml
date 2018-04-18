@@ -91,5 +91,16 @@
         android:textColor="@android:color/white"
         android:textStyle="bold" />
 
+    <TextView
+        android:id="@+id/advancedSearch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/advanced_search"
+        android:layout_marginTop="20dp"
+        android:layout_gravity="center"
+        android:clickable="true"
+        android:layout_marginBottom="20dp"
+        />
+
 
 </LinearLayout>

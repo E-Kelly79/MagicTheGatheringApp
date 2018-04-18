@@ -73,7 +73,7 @@ public class CardDetailsActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         user = mAuth.getCurrentUser();
         database = FirebaseDatabase.getInstance();
-        decks = database.getReference().child("Decks").child("Athersquall");
+        decks = database.getReference().child(user.getUid()).child("Deck");
         decks.keepSynced(true);
         deck = new Decks();
 

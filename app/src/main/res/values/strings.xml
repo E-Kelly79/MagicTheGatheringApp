@@ -35,6 +35,7 @@
     <string name="email_signup">Email</string>
     <string name="password_signup">password</string>
     <string name="register_btn">Register</string>
+    <string name="advanced_search">Advanced Search</string>
 
     <string-array name="type_array">
         <item>Please Select a Type</item>
