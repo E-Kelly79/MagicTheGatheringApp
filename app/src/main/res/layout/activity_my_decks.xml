@@ -33,25 +33,22 @@
             app:contentInsetStart="0dp"
             app:contentInsetRight="0dp"
             app:contentInsetEnd="0dp">
-
-
-
         </android.support.v7.widget.Toolbar>
-
     </android.support.design.widget.AppBarLayout>
 
+
     <com.huxq17.swipecardsview.SwipeCardsView
-        android:id="@+id/swipeCardView"
-        android:background="@drawable/rust"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:alphaOffsetStep="20"
-        app:scaleOffsetStep="0.08"
-        app:yOffsetStep="20dp"
+    android:id="@+id/swipeCardView"
+    android:background="@drawable/rust"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:alphaOffsetStep="20"
+    app:scaleOffsetStep="0.08"
+    app:yOffsetStep="20dp"
 
-        >
+    >
 
-    </com.huxq17.swipecardsview.SwipeCardsView>
+</com.huxq17.swipecardsview.SwipeCardsView>
 
 
 </android.support.design.widget.CoordinatorLayout>

@@ -3,6 +3,8 @@ package app.ie.mymagiccards.activity;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -19,6 +21,8 @@ import butterknife.OnClick;
 public class LifeCounter extends AppCompatActivity {
     private int player1 = 20;
     private int player2 = 20;
+
+    Animation rotateCoin;
 
     @BindView(R.id.playerOneMinus)  Button playerOneMin;
     @BindView(R.id.playerOnePlus)   Button playerOnePlus;
@@ -39,8 +43,12 @@ public class LifeCounter extends AppCompatActivity {
         setContentView(R.layout.activity_life_counter);
         ButterKnife.bind(this);
 
+        rotateCoin = AnimationUtils.loadAnimation(this,R.anim.rotate);
+
         lifeValue1.setText(String.valueOf(player1));
         lifeValue2.setText(String.valueOf(player2));
+
+
     }
 
     @OnClick(R.id.coinFlip)
@@ -51,14 +59,20 @@ public class LifeCounter extends AppCompatActivity {
         String result;
         if(number == 1){
             coinImage.setVisibility(View.VISIBLE);
+            coinImage.startAnimation(rotateCoin);
             Glide.with(getApplicationContext())
                     .load(R.drawable.heads)
                     .into(coinImage);
+
+
         }else{
             coinImage.setVisibility(View.VISIBLE);
+            coinImage.startAnimation(rotateCoin);
             Glide.with(getApplicationContext())
                     .load(R.drawable.tails)
                     .into(coinImage);
+
+
         }
     }
 

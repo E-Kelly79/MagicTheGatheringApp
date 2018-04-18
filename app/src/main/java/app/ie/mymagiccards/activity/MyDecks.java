@@ -131,7 +131,7 @@ public class MyDecks extends AppCompatActivity  {
     public void removeCard(String id){
 
         databaseReference.child(id).removeValue();
-        notify();
+       recreate();
 
     }
 
