@@ -96,6 +96,11 @@ public class CardDetailsActivity extends AppCompatActivity {
     }
 
     @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        return super.onPrepareOptionsMenu(menu);
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle menu clicks here.
         int id = item.getItemId();
@@ -106,11 +111,11 @@ public class CardDetailsActivity extends AppCompatActivity {
                 Log.i("Deck Name", deck.getCardImage());
                 Log.i("Deck Image", deck.getCardImage());
                 addCardToDeck(deck.getCardName(), deck.getCardImage());
-
                 break;
             case R.id.signout:
                 if(mAuth != null && user != null){
                     mAuth.signOut();
+                    startActivity(new Intent(CardDetailsActivity.this, MainMenu.class));
                 }
                 break;
         }
